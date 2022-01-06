@@ -214,3 +214,87 @@ export const experienceDelete = asyncHandler(async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
+
+/*
+  @Route   PUT api/profile/education
+  @desc    Update User Profile Education
+  @access  Private
+*/
+export const eduUpdate = asyncHandler(async (req, res) => {
+  try {
+    // Check validators to make sure certain fields are in the req.body
+    if (
+      !req.body.school ||
+      !req.body.degree ||
+      !req.body.fieldofstudy ||
+      !req.body.from
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: `Please add required fields` });
+    }
+
+    try {
+      const profile = await Profile.findOne({ user: req.user.id });
+      if (!profile) {
+        return res.status(400).json({
+          success: false,
+          message: "Please first complete your profile",
+        });
+      }
+      profile.education.unshift(req.body);
+
+      await profile.save();
+
+      res.status(200).json({ success: true, profile });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ success: false, message: "Database Error" });
+    }
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+/*
+  @Route   DELETE api/profile/education/:edu_id
+  @desc    remove user education
+  @access  Private
+*/
+export const educationDelete = asyncHandler(async (req, res) => {
+  try {
+    const foundProfile = await Profile.findOne({ user: req.user.id });
+
+    foundProfile.education = foundProfile.education.filter(
+      (exp) => exp._id.toString() !== req.params.exp_id
+    );
+
+    await foundProfile.save();
+    return res.status(200).json({ success: true, foundProfile });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// @route    GET api/profile/github/:username
+// @desc     Get user repos from Github
+// @access   Public
+export const githubRepos = asyncHandler(async (req, res) => {
+  try {
+    const uri = encodeURI(
+      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+    );
+    const headers = {
+      "user-agent": "node.js",
+      Authorization: `token ${config.get("githubToken")}`,
+    };
+
+    const gitHubResponse = await axios.get(uri, { headers });
+    return res.json(gitHubResponse.data);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(404).json({ msg: "No Github profile found" });
+  }
+});
