@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/async.js";
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
+import axios from "axios";
 
 /*
   @Route   GET api/profile/me
@@ -288,13 +289,13 @@ export const githubRepos = asyncHandler(async (req, res) => {
     );
     const headers = {
       "user-agent": "node.js",
-      Authorization: `token ${config.get("githubToken")}`,
+      Authorization: `token ${process.env.GITHUB_TOKEN}`,
     };
 
     const gitHubResponse = await axios.get(uri, { headers });
     return res.json(gitHubResponse.data);
   } catch (err) {
     console.error(err.message);
-    return res.status(404).json({ msg: "No Github profile found" });
+    return res.status(404).json({ message: "No Github profile found" });
   }
 });
