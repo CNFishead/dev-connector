@@ -6,16 +6,18 @@ const Alert = () => {
   // App State
   const alert = useSelector((state) => state.alert);
   return (
-    alert !== null &&
-    alert.length > 0 &&
-    alert.map((alert) => (
-      <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-        {alert.message}
-      </div>
-    ))
+    <div className="alert-wrapper">
+      {alert.map((alert) => (
+        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+          {alert.message}
+        </div>
+      ))}
+    </div>
   );
 };
 
-Alert.PropTypes = { alerts: PropTypes.array.isRequired };
+Alert.propTypes = {
+  alert: PropTypes.array.isRequired,
+};
 
 export default Alert;

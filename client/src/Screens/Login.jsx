@@ -17,7 +17,7 @@ const Login = () => {
     e.preventDefault();
   };
   return (
-    <div>
+    <div className="container">
       <h1 class="large text-primary">Sign In</h1>
       <p class="lead">
         <i class="fas fa-user"></i> Sign into Your Account

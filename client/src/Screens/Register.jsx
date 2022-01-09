@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../actions/alert";
+import { register } from "../actions/authActions";
 
 const Register = () => {
   // init stuff
@@ -8,14 +9,15 @@ const Register = () => {
 
   // Component State
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     password2: "",
   });
 
   // Destructure state
-  const { name, email, password, password2 } = formData;
+  const { firstName, lastName, email, password, password2 } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,12 +28,12 @@ const Register = () => {
     if (password !== password2) {
       dispatch(setAlert("passwords do not match", "danger"));
     } else {
-      console.log(formData);
+      dispatch(register(formData));
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
@@ -40,10 +42,20 @@ const Register = () => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Name"
-            name="name"
+            placeholder="First Name"
+            name="firstName"
             required
-            value={name}
+            value={firstName}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Last Name"
+            name="lastName"
+            required
+            value={lastName}
             onChange={handleChange}
           />
         </div>
