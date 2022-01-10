@@ -1,6 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 const Alert = () => {
   // App State
@@ -16,8 +15,5 @@ const Alert = () => {
   );
 };
 
-Alert.propTypes = {
-  alert: PropTypes.array.isRequired,
-};
 
 export default Alert;
