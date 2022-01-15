@@ -8,11 +8,19 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   return (
     <nav className="navbar bg-dark">
-      <h1>
+      <h1 style={{ display: "inline" }}>
         <Link to="/">
           <i className="fas fa-code"></i> DevConnector
         </Link>
       </h1>
+      {user && (
+        <img
+          src={`https:${user.avatar}`}
+          alt="user profile pic"
+          style={{ width: "50px", borderRadius: "50%" }}
+        />
+      )}
+
       <ul>
         {user ? (
           <>
