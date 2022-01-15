@@ -9,7 +9,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // App State
-  const { userInfo, loading } = useSelector((state) => state.userLogin);
+  const { user, loading } = useSelector((state) => state.auth);
 
   // Component State
   const [formData, setFormData] = useState({
@@ -29,10 +29,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (user) {
       navigate("/");
     }
-  }, [userInfo, navigate]);
+  }, [user, navigate]);
   return (
     <div className="container">
       <h1 className="large text-primary">Sign In</h1>

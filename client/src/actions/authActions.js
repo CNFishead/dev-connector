@@ -14,7 +14,6 @@ import {
 import { setAlert } from "./alert";
 import axios from "axios";
 
-
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -38,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
