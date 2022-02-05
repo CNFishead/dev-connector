@@ -10,7 +10,7 @@ const userInfoFromStorage = localStorage.getItem("user")
   : null;
 
 const initialState = {
-  userLogin: { user: userInfoFromStorage },
+  auth: { user: userInfoFromStorage },
 };
 const store = createStore(
   rootReducer,

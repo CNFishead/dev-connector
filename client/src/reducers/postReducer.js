@@ -3,7 +3,6 @@ import {
   ADD_POST,
   DELETE_POST,
   GET_POST,
-  GET_POSTS,
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   POST_ERROR,
@@ -19,7 +18,7 @@ export const postReducer = (
     case GET_POSTS_REQUEST:
       return { ...state, loading: true };
     case GET_POSTS_SUCCESS:
-      return { loading: false, ...state, posts: action.payload };
+      return { ...state, loading: false, posts: action.payload };
     // case GET_POSTS:
     //   return {
     //     ...state,

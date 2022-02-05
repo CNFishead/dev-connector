@@ -1,4 +1,5 @@
 import {
+  CLEAR_PROFILE,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -58,11 +59,12 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("userInfo");
+  localStorage.removeItem("user");
   localStorage.removeItem("users");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: CLEAR_PROFILE });
   document.location.href = "/";
 };
 

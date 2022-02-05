@@ -2,6 +2,7 @@ import asyncHandler from "../middleware/async.js";
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
 import axios from "axios";
+import { normalize } from "path";
 
 /*
   @Route   GET api/profile/me
@@ -10,7 +11,7 @@ import axios from "axios";
 */
 export const getUser = asyncHandler(async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
+    const profile = await Profile.findOne({ user: req.user._id }).populate(
       "user",
       ["name", "avatar"]
     );
@@ -20,7 +21,7 @@ export const getUser = asyncHandler(async (req, res) => {
         message: `No Profile for user: ${req.user.id}`,
       });
     }
-    res.status(200).json({ success: true, profile });
+    res.status(200).json(profile);
   } catch (e) {
     console.error(e.message);
     res.status(500).json({ success: false, message: e });
@@ -84,14 +85,14 @@ export const createOrUpdate = asyncHandler(async (req, res) => {
         { $set: profileFields },
         { new: true, upsert: true, setDefaultsOnInsert: true }
       );
-      return res.json({ success: true, profile });
+      return res.json(profile);
     } catch (err) {
       console.error(err.message);
       return res.status(500).json({ success: false, message: "Server Error" });
     }
   } catch (e) {
     console.error(e.message);
-    res.status(500).json({ success: false, message: e });
+    res.status(500).json({ success: false, message: e.message });
   }
 });
 

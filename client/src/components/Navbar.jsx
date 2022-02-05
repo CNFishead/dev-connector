@@ -10,7 +10,8 @@ const Navbar = () => {
     <nav className="navbar bg-dark">
       <h1 style={{ display: "inline" }}>
         <Link to="/">
-          <i className="fas fa-code"></i> DevConnector
+          <i className="fas fa-code"></i>{" "}
+          <span className="xs-hide">DevConnector</span>
         </Link>
       </h1>
       {user && (
@@ -25,14 +26,22 @@ const Navbar = () => {
         {user ? (
           <>
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard">
+                {" "}
+                <i className="fas fa-user" />{" "}
+                <span className="hide-sm">Dashboard</span>
+              </Link>
             </li>
             <li>
               <Link to="/profile">Profile</Link>
             </li>
             <li>
+              <Link to="/profiles">Developers</Link>
+            </li>
+            <li>
               <Link to="" onClick={() => dispatch(logout())}>
-                Logout
+                <i className="fas fa-sign-out-alt" />{" "}
+                <span className="hide-sm">Logout</span>
               </Link>
             </li>
           </>

@@ -7,7 +7,7 @@ import {
 import { logout } from "./authActions";
 
 export const getPosts =
-  (keyword, pageNumber = 1) =>
+  (keyword = "", pageNumber = 1) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -30,7 +30,7 @@ export const getPosts =
       );
       dispatch({
         type: GET_POSTS_SUCCESS,
-        payload: data.posts,
+        payload: data,
       });
     } catch (error) {
       const message =

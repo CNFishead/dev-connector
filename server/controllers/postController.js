@@ -107,7 +107,7 @@ export const deleteComment = asyncHandler(async (req, res) => {
 export const getPosts = asyncHandler(async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
-    res.status(200).json({ success: true, posts });
+    res.status(200).json(posts);
   } catch (e) {
     console.error(e.message);
     res.status(500).json({ success: false, message: "Server Error" });
