@@ -5,6 +5,10 @@ import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
+import AddExperience from "./components/profile-forms/AddExperience";
+import AddEducation from "./components/profile-forms/AddEducation";
+import Profiles from "./components/Profiles/Profiles";
+import Profile from "./components/Profile/Profile";
 
 // Screens
 import Landing from "./Screens/Landing";
@@ -12,7 +16,6 @@ import Login from "./Screens/Login";
 import NotFound from "./Screens/NotFound";
 import Register from "./Screens/Register";
 import Dashboard from "./Screens/Dashboard/Dashboard";
-
 
 const App = () => {
   return (
@@ -30,10 +33,18 @@ const App = () => {
           }
         />
         <Route
-          path="/create-profile"
+          path="/add-experience"
           element={
             <PrivateRoute>
-              <CreateProfile />
+              <AddExperience />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/add-education"
+          element={
+            <PrivateRoute>
+              <AddEducation />
             </PrivateRoute>
           }
         />
@@ -45,6 +56,8 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path="/profiles" element={<Profiles />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Landing />} />
         {/* Catches all routes not handled by App found */}

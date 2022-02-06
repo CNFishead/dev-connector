@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/async.js";
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 import axios from "axios";
 import { normalize } from "path";
 
@@ -104,7 +105,7 @@ export const createOrUpdate = asyncHandler(async (req, res) => {
 export const getAllProfiles = asyncHandler(async (req, res) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-    res.status(200).json({ success: true, profiles });
+    res.status(200).json(profiles);
   } catch (e) {
     console.error(e.message);
     res.status(500).json({ message: "Server Error" });
@@ -120,13 +121,13 @@ export const getProfile = asyncHandler(async (req, res) => {
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id,
-    }).populate("user", ["name", "avatar"]);
+    }).populate("user", ["firstName", "avatar"]);
     if (!profile) {
       return res
         .status(400)
         .json({ success: false, message: "No Profile For User" });
     }
-    res.status(200).json({ success: true, profile });
+    res.status(200).json(profile);
   } catch (e) {
     console.error(e.message);
 
@@ -147,7 +148,8 @@ export const getProfile = asyncHandler(async (req, res) => {
 */
 export const deleteProfile = asyncHandler(async (req, res) => {
   try {
-    // TODO: Remove users posts
+    // Remove Posts
+    await Post.deleteMany({ user: req.user.id });
 
     // Remove Profile
     await Profile.findOneAndRemove({ user: req.user.id });
@@ -185,7 +187,7 @@ export const experienceUpdate = asyncHandler(async (req, res) => {
 
       await profile.save();
 
-      res.status(200).json({ success: true, profile });
+      res.status(200).json(profile);
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ success: false, message: "Database Error" });
@@ -210,7 +212,7 @@ export const experienceDelete = asyncHandler(async (req, res) => {
     );
 
     await foundProfile.save();
-    return res.status(200).json({ success: true, foundProfile });
+    return res.status(200).json(foundProfile);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });
@@ -248,7 +250,7 @@ export const eduUpdate = asyncHandler(async (req, res) => {
 
       await profile.save();
 
-      res.status(200).json({ success: true, profile });
+      res.status(200).json(profile);
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ success: false, message: "Database Error" });
@@ -269,11 +271,11 @@ export const educationDelete = asyncHandler(async (req, res) => {
     const foundProfile = await Profile.findOne({ user: req.user.id });
 
     foundProfile.education = foundProfile.education.filter(
-      (exp) => exp._id.toString() !== req.params.exp_id
+      (edu) => edu._id.toString() !== req.params.edu_id
     );
 
     await foundProfile.save();
-    return res.status(200).json({ success: true, foundProfile });
+    return res.status(200).json(foundProfile);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import Loader from "../../components/Loader";
 import Meta from "../../components/Meta";
-import Post from "../../components/Post";
 import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 // actions
 import { getCurrentProfile } from "../../actions/profileActions";
+import { deleteAccount } from "../../actions/profileActions";
 
 const Dashboard = () => {
   // define
@@ -32,7 +34,23 @@ const Dashboard = () => {
             {user && `${user.firstName} ${user.lastName}`}
           </p>
           <DashboardActions />
-          <Post />
+          {profile && profile.experience !== null && (
+            <Experience experience={profile.experience} />
+          )}
+
+          {profile && profile.education !== null && (
+            <Education education={profile.education} />
+          )}
+
+          <div className="my-2">
+            {" "}
+            <button
+              className="btn btn-danger"
+              onClick={() => dispatch(deleteAccount())}
+            >
+              <i className="fas fa-user-minus"></i> Delete my Account
+            </button>
+          </div>
         </div>
       )}
     </div>

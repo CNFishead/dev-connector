@@ -29,6 +29,7 @@ export const login = asyncHandler(async (req, res, next) => {
   // User Auth
   if (user && (await user.matchPassword(password))) {
     res.json({
+      _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       gender: user.gender,
@@ -48,10 +49,7 @@ export const login = asyncHandler(async (req, res, next) => {
  */
 export const getMe = asyncHandler(async (req, res, nex) => {
   const user = await User.findById(req.user.id).select("-isAdmin -isActive");
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
+  res.status(200).json(user);
 });
 
 /* @desc    Forgot password
@@ -62,7 +60,6 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.status(404).json({
-      success: false,
       message: `There is no user with email: ${req.body.email}`,
     });
   }
@@ -147,6 +144,7 @@ export const register = asyncHandler(async (req, res, next) => {
     //   message: message,
     // });
     res.status(201).json({
+      _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       gender: user.gender,

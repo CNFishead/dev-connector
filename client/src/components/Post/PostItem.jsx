@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import formatDate from "../utils/formatDate";
+import formatDate from "../../utils/formatDate";
 import { connect } from "react-redux";
-import { addLike, removeLike, deletePost } from "../actions/postActions";
+import { addLike, removeLike, deletePost } from "../../actions/postActions";
 
 const PostItem = ({
   addLike,

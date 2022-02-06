@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect, useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
 import PostForm from "./PostForm";
-import { getPosts } from "../actions/postActions";
+import { getPosts } from "../../actions/postActions";
 
-import Loader from "./Loader";
+import Loader from "../Loader";
 import { Link } from "react-router-dom";
 
 const Post = () => {

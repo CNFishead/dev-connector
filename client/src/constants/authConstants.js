@@ -7,6 +7,6 @@ export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const CLEAR_PROFILE = "CLEAR_PROFILE";
-
+export const DELETE_ACCOUNT = "DELETE_ACCOUNT";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
