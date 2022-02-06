@@ -18,18 +18,19 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { profile, loading } = useSelector((state) => state.profile);
-
   useEffect(() => {
     dispatch(getProfileById(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, loading]);
   return (
     <>
       <section className="container">
-        {profile === null && loading ? (
+        {profile === null ? (
           <Loader />
         ) : (
           <Fragment>
-            <Meta title={`Developer Profile | ${profile.user.firstName}`} />
+            {profile !== null && (
+              <Meta title={`Developer Profile | ${profile.user.firstName}`} />
+            )}
             <Link to="/profiles" className="btn btn-light">
               Back To Profiles
             </Link>

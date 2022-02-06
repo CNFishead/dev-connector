@@ -50,7 +50,7 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         profile: null,
-        repose: [],
+        repos: [],
         loading: false,
       };
 
