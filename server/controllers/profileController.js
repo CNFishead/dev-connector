@@ -149,7 +149,7 @@ export const getProfile = asyncHandler(async (req, res) => {
 export const deleteProfile = asyncHandler(async (req, res) => {
   try {
     // Remove Posts
-    await Post.deleteMany({ user: req.user.id });
+    // await Post.deleteMany({ user: req.user.id });
 
     // Remove Profile
     await Profile.findOneAndRemove({ user: req.user.id });

@@ -23,7 +23,7 @@ export const createPost = asyncHandler(async (req, res) => {
       user: req.user.id,
     });
     const post = await newPost.save();
-    res.status(200).json({ success: true, post });
+    res.status(200).json(post);
   } catch (e) {
     console.error(e.message);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -57,7 +57,7 @@ export const createComment = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    res.status(200).json({ success: true, comments: post.comments });
+    res.status(200).json(post.comments);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -79,11 +79,11 @@ export const deleteComment = asyncHandler(async (req, res) => {
     );
     // Make sure comment exists
     if (!comment) {
-      return res.status(404).json({ msg: "Comment does not exist" });
+      return res.status(404).json({ message: "Comment does not exist" });
     }
     // Check user
     if (comment.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" });
+      return res.status(401).json({ message: "User not authorized" });
     }
 
     post.comments = post.comments.filter(
@@ -92,7 +92,7 @@ export const deleteComment = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    res.status(200).json({ success: true, comments: post.comments });
+    res.status(200).json(post.comments);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -124,17 +124,13 @@ export const getPost = asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.id);
     // check if post exists
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: "post not found" });
+      return res.status(404).json({ message: "post not found" });
     }
-    res.status(200).json({ success: true, post });
+    res.status(200).json(post);
   } catch (e) {
     console.error(e.message);
     if (e.kind === "ObjectId") {
-      return res
-        .status(404)
-        .json({ success: false, message: "post not found" });
+      return res.status(404).json({ message: "post not found" });
     }
     res.status(500).json({ success: false, message: "Server Error" });
   }
@@ -150,9 +146,7 @@ export const deletePost = asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.id);
     // check if post exists
     if (!post) {
-      return res
-        .status(404)
-        .json({ success: false, message: "post not found" });
+      return res.status(404).json({ message: "post not found" });
     }
     // check if user owns the post.
     // need to set post.user to a string
@@ -201,11 +195,11 @@ export const likePost = asyncHandler(async (req, res) => {
         ({ user }) => user.toString() !== req.user.id
       );
       await post.save();
-      return res.status(200).json({ success: true, likes: post.likes.length });
+      return res.status(200).json(post.likes);
     }
     post.likes.unshift({ user: req.user.id });
     await post.save();
-    res.status(200).json({ success: true, likes: post.likes.length });
+    res.status(200).json(post.likes);
   } catch (e) {
     console.error(e.message);
     res.status(500).json({ success: false, message: "Server Error" });

@@ -36,6 +36,9 @@ const Navbar = () => {
               <Link to="/profiles">Developers</Link>
             </li>
             <li>
+              <Link to="/posts">Posts</Link>
+            </li>
+            <li>
               <Link to="" onClick={() => dispatch(logout())}>
                 <i className="fas fa-sign-out-alt" />{" "}
                 <span className="hide-sm">Logout</span>

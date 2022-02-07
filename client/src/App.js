@@ -9,6 +9,7 @@ import AddExperience from "./components/profile-forms/AddExperience";
 import AddEducation from "./components/profile-forms/AddEducation";
 import Profiles from "./components/Profiles/Profiles";
 import Profile from "./components/Profile/Profile";
+import DiscussionPage from "./components/Post/DiscussionPage";
 
 // Screens
 import Landing from "./Screens/Landing";
@@ -16,8 +17,18 @@ import Login from "./Screens/Login";
 import NotFound from "./Screens/NotFound";
 import Register from "./Screens/Register";
 import Dashboard from "./Screens/Dashboard/Dashboard";
+import Post from "./components/Posts/Post";
+import { useSelector } from "react-redux";
+import setAuthToken from "./utils/setAuthToken";
 
 const App = () => {
+  // This sets the common headers for axios
+  // if there is a user object, that object has a token
+  // set the common header to that token
+  const { user } = useSelector((state) => state.auth);
+  if (user) {
+    setAuthToken(user.token);
+  }
   return (
     <Router>
       <Navbar />
@@ -53,6 +64,22 @@ const App = () => {
           element={
             <PrivateRoute>
               <CreateProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/posts"
+          element={
+            <PrivateRoute>
+              <Post />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/post/discussion/:id"
+          element={
+            <PrivateRoute>
+              <DiscussionPage />
             </PrivateRoute>
           }
         />

@@ -14,15 +14,7 @@ import { DELETE_ACCOUNT } from "../constants/authConstants";
 // Get Current users profile
 export const getCurrentProfile = () => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.get("/api/profile/me", config);
+    const res = await axios.get("/api/profile/me");
     dispatch({ type: GET_PROFILE, payload: res.data });
   } catch (error) {
     const message =
@@ -40,15 +32,7 @@ export const getCurrentProfile = () => async (dispatch, getState) => {
 export const getAllProfiles = () => async (dispatch, getState) => {
   dispatch({ type: CLEAR_PROFILE });
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.get("/api/profile", config);
+    const res = await axios.get("/api/profile");
     dispatch({ type: GET_PROFILES, payload: res.data });
   } catch (error) {
     const message =
@@ -66,15 +50,7 @@ export const getAllProfiles = () => async (dispatch, getState) => {
 // Get profile by id
 export const getProfileById = (userId) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.get(`/api/profile/user/${userId}`, config);
+    const res = await axios.get(`/api/profile/user/${userId}`);
     dispatch({ type: GET_PROFILE, payload: res.data });
   } catch (error) {
     const message =
@@ -92,15 +68,7 @@ export const getProfileById = (userId) => async (dispatch, getState) => {
 // Get profile github repos
 export const getGithubRepos = (username) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.get(`/api/profile/github/${username}`, config);
+    const res = await axios.get(`/api/profile/github/${username}`);
     dispatch({ type: GET_REPOS, payload: res.data });
   } catch (error) {
     const message =
@@ -121,15 +89,7 @@ export const getGithubRepos = (username) => async (dispatch, getState) => {
 export const createProfile =
   (form, navigate, edit) => async (dispatch, getState) => {
     try {
-      const {
-        auth: { user },
-      } = getState();
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const res = await axios.post("/api/profile", form, config);
+      const res = await axios.post("/api/profile", form);
       dispatch({ type: GET_PROFILE, payload: res.data });
       dispatch(
         setAlert(
@@ -160,15 +120,7 @@ export const createProfile =
 // history is passed in to redirect
 export const addExperience = (form, navigate) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.put("/api/profile/experience", form, config);
+    const res = await axios.put("/api/profile/experience", form);
     dispatch({ type: UPDATE_PROFILE, payload: res.data });
     dispatch(setAlert("Experience added", "success"));
 
@@ -193,15 +145,7 @@ export const addExperience = (form, navigate) => async (dispatch, getState) => {
 // history is passed in to redirect
 export const addEducation = (form, navigate) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.put("/api/profile/education", form, config);
+    const res = await axios.put("/api/profile/education", form);
     dispatch({ type: UPDATE_PROFILE, payload: res.data });
     dispatch(setAlert("Education added", "success"));
 
@@ -225,15 +169,7 @@ export const addEducation = (form, navigate) => async (dispatch, getState) => {
 // Remove Experience
 export const deleteExperience = (id) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.delete(`/api/profile/experience/${id}`, config);
+    const res = await axios.delete(`/api/profile/experience/${id}`);
     dispatch({ type: UPDATE_PROFILE, payload: res.data });
     dispatch(setAlert("Experience Removed", "success"));
   } catch (error) {
@@ -255,15 +191,7 @@ export const deleteExperience = (id) => async (dispatch, getState) => {
 // Remove Education
 export const deleteEducation = (id) => async (dispatch, getState) => {
   try {
-    const {
-      auth: { user },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const res = await axios.delete(`/api/profile/education/${id}`, config);
+    const res = await axios.delete(`/api/profile/education/${id}`);
     dispatch({ type: UPDATE_PROFILE, payload: res.data });
     dispatch(setAlert("Education Removed", "success"));
   } catch (error) {
@@ -286,15 +214,7 @@ export const deleteEducation = (id) => async (dispatch, getState) => {
 export const deleteAccount = () => async (dispatch, getState) => {
   if (window.confirm(`Are you sure? This action can NOT be undone!`)) {
     try {
-      const {
-        auth: { user },
-      } = getState();
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      await axios.delete(`/api/profile`, config);
+      await axios.delete(`/api/profile`);
       dispatch({ type: CLEAR_PROFILE });
       dispatch({ type: DELETE_ACCOUNT });
       dispatch(setAlert("Your Account has been permanently deleted"));
