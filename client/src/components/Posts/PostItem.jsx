@@ -7,15 +7,15 @@ import { addLike, deletePost } from "../../actions/postActions";
 import { useEffect } from "react";
 
 const PostItem = ({
-  // post: { _id, text, name, avatar, user, likes, comments, createdAt },
+  post: { _id, text, name, avatar, user, likes, comments, createdAt },
   showActions,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user: auth, loading } = useSelector((state) => state.auth);
-  const {
-    post: { _id, text, name, avatar, user, likes, comments, createdAt },
-  } = useSelector((state) => state.newsFeed);
+  // const {
+  //   post: { _id, text, name, avatar, user, likes, comments, createdAt },
+  // } = useSelector((state) => state.newsFeed);
   useEffect(() => {}, [dispatch]);
   return (
     <div className="post bg-white p-1 my-1">
